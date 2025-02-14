@@ -7,6 +7,9 @@ public class DocBibliotheque {
     private int annee;
     private String emplacement;
     private boolean reserve;
+    private static int nombreDocEmpruntes = 0;
+    private static int nombreDocReserves = 0;
+    private static int nombreDocRetour = 0;
 
     public DocBibliotheque() {
         this.codeArchivage = "";
@@ -31,6 +34,7 @@ public class DocBibliotheque {
         if (this.getEmplacement().equals("Emprunte")) {
             this.reserve = true;
             result = true;
+            nombreDocReserves++;
         }
         return result;
     }
@@ -40,11 +44,14 @@ public class DocBibliotheque {
         if (this.getEmplacement().equals("Etagere")) {
             this.emplacement = "Emprunte";
             result = true;
+            nombreDocEmpruntes++;
         }
         if (this.getEmplacement().equals("Reserve")) {
             this.emplacement = "Emprunte";
             this.reserve = false;
             result = true;
+            nombreDocEmpruntes++;
+            nombreDocReserves--;
         }
         return result;
 
@@ -53,8 +60,15 @@ public class DocBibliotheque {
     public boolean retourner() {
         boolean result = false;
         if (this.estEmprunte()) {
-            this.emplacement = "Retour";
+            if (this.reserve) {
+                this.emplacement = "Reserve";
+                nombreDocReserves++;
+            } else {
+                this.emplacement = "Retour";
+                nombreDocRetour++;
+            }
             result = true;
+            nombreDocEmpruntes--;
         }
         return result;
     }
@@ -65,6 +79,7 @@ public class DocBibliotheque {
             this.reserve = false;
             if (this.getEmplacement().equals("Reserve")) {
                 this.emplacement = "Etagere";
+                nombreDocReserves--;
             }
             result = true;
         }
@@ -74,14 +89,23 @@ public class DocBibliotheque {
     public boolean ranger() {
         boolean result = false;
         if (this.getEmplacement().equals("Retour")) {
-            if (this.reserve) {
-                this.emplacement = "Reserve";
-            } else {
-                this.emplacement = "Etagere";
-            }
+            this.emplacement = "Etagere";
+            nombreDocRetour--;
             result = true;
         }
         return result;
+    }
+
+    public static int getNombreDocEmpruntes() {
+        return nombreDocEmpruntes;
+    }
+
+    public static int getNombreDocReserves() {
+        return nombreDocReserves;
+    }
+
+    public static int getNombreDocRetour() {
+        return nombreDocRetour;
     }
 
     public boolean estDisponible() {
