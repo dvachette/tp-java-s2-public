@@ -8,7 +8,7 @@ public class DocBibliotheque {
     private String emplacement;
     private boolean reserve;
     private static int nombreDocEmpruntes = 0;
-    private static int nombreDocReserves = 0;
+    private static int nombreDocReserve = 0;
     private static int nombreDocRetour = 0;
 
     public DocBibliotheque() {
@@ -34,7 +34,6 @@ public class DocBibliotheque {
         if (this.getEmplacement().equals("Emprunte")) {
             this.reserve = true;
             result = true;
-            nombreDocReserves++;
         }
         return result;
     }
@@ -51,7 +50,7 @@ public class DocBibliotheque {
             this.reserve = false;
             result = true;
             nombreDocEmpruntes++;
-            nombreDocReserves--;
+            nombreDocReserve--;
         }
         return result;
 
@@ -62,7 +61,7 @@ public class DocBibliotheque {
         if (this.estEmprunte()) {
             if (this.reserve) {
                 this.emplacement = "Reserve";
-                nombreDocReserves++;
+                nombreDocReserve++;
             } else {
                 this.emplacement = "Retour";
                 nombreDocRetour++;
@@ -79,7 +78,7 @@ public class DocBibliotheque {
             this.reserve = false;
             if (this.getEmplacement().equals("Reserve")) {
                 this.emplacement = "Etagere";
-                nombreDocReserves--;
+                nombreDocReserve--;
             }
             result = true;
         }
@@ -100,8 +99,8 @@ public class DocBibliotheque {
         return nombreDocEmpruntes;
     }
 
-    public static int getNombreDocReserves() {
-        return nombreDocReserves;
+    public static int getNombreDocReserve() {
+        return nombreDocReserve;
     }
 
     public static int getNombreDocRetour() {
