@@ -9,7 +9,10 @@ public class TestBibliotheque {
     public static int testPassed = 0;
 
     public static void main(String[] args) {
-        DocBibliotheque doc1 = new DocBibliotheque("004. 178 K20PM", "Introduction à Java", "J. Leblanc", 2015);
+        DocBibliotheque doc1 = new DocBibliotheque("004. 178 K20PM", "Je suis parfait mais je gère", "D. Vachette",
+                2015);
+        DocBibliotheque doc2 = new DocBibliotheque("005. 181 A74PM", "Le tresor", "Tintin", 2015);
+        DocBibliotheque doc3 = new DocBibliotheque("110. 121 E63NP", "Windows sucks", "Bill Gates", 2000);
 
         System.out.println("Document 1 : " + doc1);
 
@@ -47,13 +50,33 @@ public class TestBibliotheque {
         test("Réservation de doc1 (emprunté)", doc1.reserver(), true);
         test("Doc1 est réservé", doc1.estReserve(), true);
         doc1.retourner();
-        test("Doc1 est dans la pile de retour", doc1.getEmplacement(), "Retour");
-        test("Rangement de doc1 (retour)", doc1.ranger(), true);
+        test("Doc1 n'est dans la pile de retour", doc1.getEmplacement(), "Reserve");
         test("Doc1 est dans la pile de réservation", doc1.getEmplacement(), "Reserve");
         test("Annulation de la réservation de doc1", doc1.annulerReservation(), true);
         test("Doc1 n'est plus réservé", doc1.estReserve(), false);
         test("Doc1 est rangé", doc1.getEmplacement(), "Etagere");
 
+        System.out.println("\nTests des compteurs : ");
+
+        test("Nombre de documents empruntés", DocBibliotheque.getNombreDocEmpruntes(), 0);
+        test("Nombre de documents dans la section reservé", DocBibliotheque.getNombreDocReserve(), 0);
+        test("Nombre de documents dans la pile de retour", DocBibliotheque.getNombreDocRetour(), 0);
+        doc1.emprunter();
+        test("Nombre de documents empruntés", DocBibliotheque.getNombreDocEmpruntes(), 1);
+        doc2.emprunter();
+        test("Nombre de documents empruntés", DocBibliotheque.getNombreDocEmpruntes(), 2);
+        doc1.retourner();
+        test("Nombre de documents dans la pile de retour", DocBibliotheque.getNombreDocRetour(), 1);
+        doc3.emprunter();
+        test("Nombre de documents empruntés", DocBibliotheque.getNombreDocEmpruntes(), 2);
+        doc2.reserver();
+        test("Nombre de documents dans la section reservé", DocBibliotheque.getNombreDocReserve(), 0);
+        doc2.retourner();
+        test("Nombre de documents dans la pile de retour", DocBibliotheque.getNombreDocRetour(), 1);
+        doc1.ranger();
+        test("Nombre de documents empruntés", DocBibliotheque.getNombreDocEmpruntes(), 1);
+        test("Nombre de documents dans la section reservé", DocBibliotheque.getNombreDocReserve(), 1);
+        test("Nombre de documents dans la pile de retour", DocBibliotheque.getNombreDocRetour(), 0);
         System.out.println("\n" + testPassed + " tests réussis sur " + testCount);
     }
 
