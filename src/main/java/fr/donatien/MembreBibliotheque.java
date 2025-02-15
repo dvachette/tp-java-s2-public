@@ -70,7 +70,15 @@ public class MembreBibliotheque {
         return numeroAbonne;
     }
 
-    public boolean equals(MembreBibliotheque membreBibliotheque) {
-        return (this.numeroAbonne == membreBibliotheque.numeroAbonne);
+    public String toString() {
+        return String.format(
+                "%s :\n\tNom : %s\n\tPrenom : %s\n\tAdresse : %s\n\tN° de téléphone : %s\n\tN° abonné : %d",
+                this.getClass().getName(),
+                this.nom,
+                this.prenom,
+                this.adresse,
+                this.numeroTelephone,
+                this.numeroAbonne);
     }
+
 }

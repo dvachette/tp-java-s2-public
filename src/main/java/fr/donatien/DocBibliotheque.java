@@ -1,15 +1,18 @@
 package fr.donatien;
 
+import java.util.Objects;
+
 public class DocBibliotheque {
     private String codeArchivage;
     private String titre;
     private String auteur;
     private int annee;
     private String emplacement;
-    private boolean reserve;
     private static int nombreDocEmpruntes = 0;
     private static int nombreDocReserve = 0;
     private static int nombreDocRetour = 0;
+    private MembreBibliotheque membreEmprunteur;
+    private MembreBibliotheque membreReservant;
 
     public DocBibliotheque() {
         this.codeArchivage = "";
@@ -17,7 +20,8 @@ public class DocBibliotheque {
         this.auteur = "";
         this.annee = 0;
         this.emplacement = "Etagere";
-        this.reserve = false;
+        this.membreEmprunteur = null;
+        this.membreReservant = null;
     }
 
     public DocBibliotheque(String codeArchivage, String titre, String auteur, int annee) {
@@ -26,28 +30,30 @@ public class DocBibliotheque {
         this.auteur = auteur;
         this.annee = annee;
         this.emplacement = "Etagere";
-        this.reserve = false;
+        this.membreEmprunteur = null;
+        this.membreReservant = null;
     }
 
-    public boolean reserver() {
+    public boolean reserver(MembreBibliotheque membreReservant) {
         boolean result = false;
         if (this.getEmplacement().equals("Emprunte")) {
-            this.reserve = true;
             result = true;
+            this.membreReservant = membreReservant;
         }
         return result;
     }
 
-    public boolean emprunter() {
+    public boolean emprunter(MembreBibliotheque membreEmprunteur) {
         boolean result = false;
         if (this.getEmplacement().equals("Etagere")) {
             this.emplacement = "Emprunte";
             result = true;
+            this.membreEmprunteur = membreEmprunteur;
             nombreDocEmpruntes++;
-        }
-        if (this.getEmplacement().equals("Reserve")) {
+        } else if (this.getEmplacement().equals("Reserve") && Objects.equals(this.membreReservant, membreEmprunteur)) {
             this.emplacement = "Emprunte";
-            this.reserve = false;
+            this.membreEmprunteur = membreEmprunteur;
+            this.membreReservant = null;
             result = true;
             nombreDocEmpruntes++;
             nombreDocReserve--;
@@ -59,7 +65,7 @@ public class DocBibliotheque {
     public boolean retourner() {
         boolean result = false;
         if (this.estEmprunte()) {
-            if (this.reserve) {
+            if (!Objects.equals(this.membreReservant, null)) {
                 this.emplacement = "Reserve";
                 nombreDocReserve++;
             } else {
@@ -67,6 +73,7 @@ public class DocBibliotheque {
                 nombreDocRetour++;
             }
             result = true;
+            this.membreEmprunteur = null;
             nombreDocEmpruntes--;
         }
         return result;
@@ -74,8 +81,8 @@ public class DocBibliotheque {
 
     public boolean annulerReservation() {
         boolean result = false;
-        if (this.reserve) {
-            this.reserve = false;
+        if (!Objects.equals(this.membreReservant, null)) {
+            this.membreReservant = null;
             if (this.getEmplacement().equals("Reserve")) {
                 this.emplacement = "Etagere";
                 nombreDocReserve--;
@@ -112,7 +119,7 @@ public class DocBibliotheque {
     }
 
     public boolean estReserve() {
-        return this.reserve;
+        return !Objects.equals(this.membreReservant, null);
     }
 
     public boolean estEmprunte() {
@@ -156,7 +163,20 @@ public class DocBibliotheque {
     }
 
     public String toString() {
-        return "Code d'archivage: " + codeArchivage + "\nTitre: " + titre + "\nAuteur: " + auteur + "\nAnnée: " + annee
-                + "\nEmplacement: " + emplacement + "\nReservé: " + reserve;
+        return String.format(
+                "%s :\n\tCode d'archivage : %s\n\tTitre : %s\n\tAuteur : %s\n\tAnnée : %d",
+                this.getClass().getName(),
+                this.codeArchivage,
+                this.titre,
+                this.auteur,
+                this.annee);
+    }
+
+    public MembreBibliotheque getMembreEmprunteur() {
+        return this.membreEmprunteur;
+    }
+
+    public MembreBibliotheque getMembreReservant() {
+        return this.membreReservant;
     }
 }
