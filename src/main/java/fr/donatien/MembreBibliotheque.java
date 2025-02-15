@@ -69,4 +69,8 @@ public class MembreBibliotheque {
     public int getNumeroAbonne() {
         return numeroAbonne;
     }
+
+    public boolean equals(MembreBibliotheque membreBibliotheque) {
+        return (this.numeroAbonne == membreBibliotheque.numeroAbonne);
+    }
 }
