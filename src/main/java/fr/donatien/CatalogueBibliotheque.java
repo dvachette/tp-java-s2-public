@@ -1,21 +1,6 @@
 package fr.donatien;
 
 import java.util.ArrayList;
-import java.util.Scanner;
-
-/**
- * public CatalogueBibliotheque()
-oune méthode ajoutant un document qui retourne true si l’ajout est possible, false sinon
-public boolean ajDoc(DocBibliotheque docAj)
-oune méthode supprimant un document qui retourne true si la suppression est possible, false sinon
-public boolean supDoc(DocBibliotheque docSup)
-oune méthode permettant de retourner le document à l’indice i
-public DocBibliotheque accesDoc(int i)
-oune méthode affichant tous les documents de la bibliothèque
-public void afficheTousLesDocs()
-oune méthode affichant les documents empruntés
-public void afficheDocsEmpruntes()
- */
 
 public class CatalogueBibliotheque {
     private ArrayList<DocBibliotheque> docs;
@@ -60,5 +45,7 @@ public class CatalogueBibliotheque {
             }
         }
     }
-
+    public int getNombreDocs() {
+        return this.docs.size();
+    }
 }
