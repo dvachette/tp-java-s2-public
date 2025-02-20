@@ -164,7 +164,7 @@ public class DocBibliotheque {
 
     public String toString() {
         return String.format(
-                "%s :\n\tCode d'archivage : %s\n\tTitre : %s\n\tAuteur : %s\n\tAnnée : %d",
+                "%s {\n\tCode d'archivage : %s\n\tTitre : %s\n\tAuteur : %s\n\tAnnée : %d\n}",
                 this.getClass().getName(),
                 this.codeArchivage,
                 this.titre,

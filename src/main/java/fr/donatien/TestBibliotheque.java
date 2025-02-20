@@ -1,6 +1,5 @@
 package fr.donatien;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TestBibliotheque {
@@ -26,18 +25,26 @@ public class TestBibliotheque {
         MembreBibliotheque user1 = new MembreBibliotheque("Vachette", "Donatien", "06.77.70.59.31", "IUT INFO LYON 1");
         MembreBibliotheque user2 = new MembreBibliotheque("Fayt", "Ethan", "06.00.00.00.00",
                 "je sais pas rue de l'ignorance");
-        ArrayList<DocBibliotheque> docs = new ArrayList<DocBibliotheque>();
-        docs.add(doc1);
-        docs.add(doc2);
-        docs.add(doc3);
+        CatalogueBibliotheque catalogue = new CatalogueBibliotheque();
+        catalogue.ajDoc(doc1);
+        catalogue.ajDoc(doc2);
+        catalogue.ajDoc(doc3);
 
-        ArrayList<MembreBibliotheque> users = new ArrayList<MembreBibliotheque>();
-        users.add(user1);
-        users.add(user2);
+
+        ListeMembres listeMembres = new ListeMembres();
+        listeMembres.ajMembre(user1);
+        listeMembres.ajMembre(user2);
+
 
         Scanner scanner = new Scanner(System.in);
 
         int choice = -1;
+
+        System.out.println(catalogue);
+        System.out.println(listeMembres);
+
+
+        System.out.println("Bienvenue dans la bibliotheque");
 
         while (choice != 0) {
             System.out.println("\n==========Menu Bibliotheque==========");
@@ -54,9 +61,9 @@ public class TestBibliotheque {
                 case 1:
                     System.out.println("===========Emprunter un document===========");
                     System.out.println("-----------Choisir l'emprunteur------------");
-                    MembreBibliotheque user = selectMembreBibliotheque(users, scanner);
+                    MembreBibliotheque user = selectMembreBibliotheque(listeMembres, scanner);
                     System.out.println("-----------Choisir le document-------------");
-                    DocBibliotheque doc = selectDocBibliotheque(docs, scanner);
+                    DocBibliotheque doc = selectDocBibliotheque(catalogue, scanner);
                     if (doc.emprunter(user)) {
                         succes("Emprunt reussi");
                     } else {
@@ -66,7 +73,7 @@ public class TestBibliotheque {
                 case 2:
                     System.out.println("===========Rendre un document==============");
                     System.out.println("-----------Choisir le document-------------");
-                    DocBibliotheque docRendu = selectDocBibliotheque(docs, scanner);
+                    DocBibliotheque docRendu = selectDocBibliotheque(catalogue, scanner);
                     if (docRendu.retourner()) {
                         succes("Retour reussi");
                     } else {
@@ -76,9 +83,9 @@ public class TestBibliotheque {
                 case 3:
                     System.out.println("===========Reserver un document============");
                     System.out.println("-----------Choisir le reservant------------");
-                    MembreBibliotheque userReservant = selectMembreBibliotheque(users, scanner);
+                    MembreBibliotheque userReservant = selectMembreBibliotheque(listeMembres, scanner);
                     System.out.println("-----------Choisir le document-------------");
-                    DocBibliotheque docReserve = selectDocBibliotheque(docs, scanner);
+                    DocBibliotheque docReserve = selectDocBibliotheque(catalogue, scanner);
                     if (docReserve.reserver(userReservant)) {
                         succes("Reservation reussi");
                     } else {
@@ -87,12 +94,12 @@ public class TestBibliotheque {
                     break;
                 case 4:
                     System.out.println("===========Afficher un document============");
-                    DocBibliotheque docAffiche = selectDocBibliotheque(docs, scanner);
+                    DocBibliotheque docAffiche = selectDocBibliotheque(catalogue, scanner);
                     System.out.println(docAffiche);
                     break;
                 case 5:
                     System.out.println("===========Afficher un membre==============");
-                    MembreBibliotheque userAffiche = selectMembreBibliotheque(users, scanner);
+                    MembreBibliotheque userAffiche = selectMembreBibliotheque(listeMembres, scanner);
                     System.out.println(userAffiche);
                     break;
                 case 0:
@@ -116,41 +123,47 @@ public class TestBibliotheque {
 
         scanner.close();
     }
-    public static MembreBibliotheque selectMembreBibliotheque(ArrayList<MembreBibliotheque> users, Scanner scanner) {
+    public static MembreBibliotheque selectMembreBibliotheque(ListeMembres users, Scanner scanner) {
         MembreBibliotheque selectedUser = null;
         int selectedUserIndex = -1;
+        int size = users.getNombreMembres();
         // Display all users
-        for (int i = 0; i < users.size(); i++) {
-            System.out.println(i + ". " + ANSI_CYAN + "User : " + users.get(i).getNom() + " " + users.get(i).getPrenom()
-                    + " " + users.get(i).getNumeroAbonne() + ANSI_RESET);
+        MembreBibliotheque currentUser = null;
+        for (int i = 0; i < size; i++) {
+            currentUser = users.accesMembre(i);
+            System.out.println(i + ". " + ANSI_CYAN + "User : " + currentUser.getNom() + " : " + currentUser.getPrenom()
+                    + " : " + currentUser.getNumeroAbonne() + ANSI_RESET);
         }
         
         // Select a user
-        do {
-            System.out.println("Select a choice (0~%d): ".formatted(users.size() - 1)); 
-            selectedUserIndex = scanner.nextInt();
-        } while (selectedUserIndex < 0 || selectedUserIndex >= users.size());
         
-        selectedUser = users.get(selectedUserIndex);
+        do {
+            System.out.println("Select a choice (0~%d): ".formatted(size - 1)); 
+            selectedUserIndex = scanner.nextInt();
+        } while (selectedUserIndex < 0 || selectedUserIndex >= size);
+        
+        selectedUser = users.accesMembre(selectedUserIndex);
         return selectedUser;
     }
         
-    public static DocBibliotheque selectDocBibliotheque(ArrayList<DocBibliotheque> docs, Scanner scanner) {
+    public static DocBibliotheque selectDocBibliotheque(CatalogueBibliotheque docs, Scanner scanner) {
         DocBibliotheque selectedDoc = null;
         int selectedDocIndex = -1;
-
+        int size = docs.getNombreDocs();
         
         // Display all docs
-        for (int i = 0; i < docs.size(); i++) {
-            System.out.println(i + ". " + ANSI_CYAN + "Doc : " + docs.get(i).getTitre() + " " + docs.get(i).getAuteur()
-                    + " " + docs.get(i).getAnnee() + ANSI_RESET);
+        DocBibliotheque currentDoc = null;
+        for (int i = 0; i < size; i++) {
+            currentDoc = docs.accesDoc(i);
+            System.out.println(i + ". " + ANSI_CYAN + "Doc : " + currentDoc.getTitre() + " : " + currentDoc.getAuteur()
+                    + " : " + currentDoc.getAnnee() + ANSI_RESET);
         }
         // Select a doc
         do {
-            System.out.println("Select a choice (0~%d): ".formatted(docs.size() - 1)); 
+            System.out.println("Select a choice (0~%d): ".formatted(size - 1)); 
             selectedDocIndex = scanner.nextInt();
-        } while (selectedDocIndex < 0 || selectedDocIndex >= docs.size());
-        selectedDoc = docs.get(selectedDocIndex);
+        } while (selectedDocIndex < 0 || selectedDocIndex >= size);
+        selectedDoc = docs.accesDoc(selectedDocIndex);
         return selectedDoc;
     }
     public static void succes(String message) {

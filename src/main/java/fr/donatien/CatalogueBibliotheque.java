@@ -48,4 +48,13 @@ public class CatalogueBibliotheque {
     public int getNombreDocs() {
         return this.docs.size();
     }
+
+    public String toString() {
+        String ans = this.getClass().getName() + " {\n" ;
+        for (DocBibliotheque doc : this.docs) {
+            ans += doc.toString() + "\n";
+        }
+        ans += "}";
+        return ans;
+    }
 }

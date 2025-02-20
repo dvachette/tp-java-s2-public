@@ -37,4 +37,13 @@ public class ListeMembres {
         }
         return result;
     }
+
+    public String toString() {
+        String ans = this.getClass().getName() + " {\n" ;
+        for (MembreBibliotheque membre : this.membres) {
+            ans += membre.toString() + "\n";
+        }
+        ans += "}";
+        return ans;
+    }
 }
