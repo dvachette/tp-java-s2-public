@@ -37,11 +37,82 @@ public class TestBibliotheque {
 
         Scanner scanner = new Scanner(System.in);
 
-        MembreBibliotheque membre = selectMembreBibliotheque(users, scanner);
-        System.out.println(membre);
+        int choice = -1;
 
-        DocBibliotheque doc = selectDocBibliotheque(docs, scanner);
-        System.out.println(doc);
+        while (choice != 0) {
+            System.out.println("\n==========Menu Bibliotheque==========");
+            System.out.println("1. Emprunter un document");
+            System.out.println("2. Rendre un document");
+            System.out.println("3. Reserver un document");
+            System.out.println("4. Afficher un documents");
+            System.out.println("5. Afficher un membres");
+            System.out.println("0. Quitter");
+            System.out.print("Select a choice (0~5): ");
+            choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.println("===========Emprunter un document===========");
+                    System.out.println("-----------Choisir l'emprunteur------------");
+                    MembreBibliotheque user = selectMembreBibliotheque(users, scanner);
+                    System.out.println("-----------Choisir le document-------------");
+                    DocBibliotheque doc = selectDocBibliotheque(docs, scanner);
+                    if (doc.emprunter(user)) {
+                        succes("Emprunt reussi");
+                    } else {
+                        fail("Emprunt echoue");
+                    }
+                    break;
+                case 2:
+                    System.out.println("===========Rendre un document==============");
+                    System.out.println("-----------Choisir le document-------------");
+                    DocBibliotheque docRendu = selectDocBibliotheque(docs, scanner);
+                    if (docRendu.retourner()) {
+                        succes("Retour reussi");
+                    } else {
+                        fail("Retour echoue");
+                    }
+                    break;
+                case 3:
+                    System.out.println("===========Reserver un document============");
+                    System.out.println("-----------Choisir le reservant------------");
+                    MembreBibliotheque userReservant = selectMembreBibliotheque(users, scanner);
+                    System.out.println("-----------Choisir le document-------------");
+                    DocBibliotheque docReserve = selectDocBibliotheque(docs, scanner);
+                    if (docReserve.reserver(userReservant)) {
+                        succes("Reservation reussi");
+                    } else {
+                        fail("Reservation echoue");
+                    }
+                    break;
+                case 4:
+                    System.out.println("===========Afficher un document============");
+                    DocBibliotheque docAffiche = selectDocBibliotheque(docs, scanner);
+                    System.out.println(docAffiche);
+                    break;
+                case 5:
+                    System.out.println("===========Afficher un membre==============");
+                    MembreBibliotheque userAffiche = selectMembreBibliotheque(users, scanner);
+                    System.out.println(userAffiche);
+                    break;
+                case 0:
+                    System.out.println("Bye");
+                    break;
+                default:
+                    System.out.println("Invalid choice");
+                    break;
+            }
+            
+
+
+
+
+
+
+
+        }
+
+
 
         scanner.close();
     }
@@ -81,5 +152,12 @@ public class TestBibliotheque {
         } while (selectedDocIndex < 0 || selectedDocIndex >= docs.size());
         selectedDoc = docs.get(selectedDocIndex);
         return selectedDoc;
+    }
+    public static void succes(String message) {
+        System.out.println(ANSI_GREEN + message + ANSI_RESET);
+    }
+
+    public static void fail(String message) {
+        System.out.println(ANSI_RED + message + ANSI_RESET);
     }
 }
