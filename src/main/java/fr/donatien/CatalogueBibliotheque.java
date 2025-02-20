@@ -1,6 +1,7 @@
 package fr.donatien;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class CatalogueBibliotheque {
     private ArrayList<DocBibliotheque> docs;
@@ -26,10 +27,11 @@ public class CatalogueBibliotheque {
     }
 
     public DocBibliotheque accesDoc(int i) {
+        DocBibliotheque doc = null;
         if (i >= 0 && i < this.docs.size()) {
-            return this.docs.get(i);
+            doc = this.docs.get(i);
         }
-        return null;
+        return doc;
     }
 
     public void afficheTousLesDocs() {
@@ -56,5 +58,41 @@ public class CatalogueBibliotheque {
         }
         ans += "}";
         return ans;
+    }
+
+    public boolean emprunteDoc(int indiceDoc, MembreBibliotheque m) {
+        boolean result = false;
+        DocBibliotheque doc = this.accesDoc(indiceDoc);
+        if (!Objects.equals(doc, null) && !Objects.equals(m, null)) {
+            result = doc.emprunter(m);
+        }
+        return result;
+    }
+    
+    public boolean reserveDoc(int indiceDoc, MembreBibliotheque m) {
+        boolean result = false;
+        DocBibliotheque doc = this.accesDoc(indiceDoc);
+        if (!Objects.equals(doc, null) && !Objects.equals(m, null)) {
+            result = doc.reserver(m);
+        }
+        return result;
+    }
+
+    public boolean annulResaDoc(int indiceDoc/*, MembreBibliotheque m*/) {
+        boolean result = false;
+        DocBibliotheque doc = this.accesDoc(indiceDoc);
+        if (!Objects.equals(doc, null)/* && !Objects.equals(m, null)*/) {
+            result = doc.annulerReservation();
+        }
+        return result;
+    }
+
+    public boolean rendreDoc(int indiceDoc) {
+        boolean result = false;
+        DocBibliotheque doc = this.accesDoc(indiceDoc);
+        if (!Objects.equals(doc, null)) {
+            result = doc.retourner();
+        }
+        return result;
     }
 }

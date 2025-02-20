@@ -61,10 +61,11 @@ public class TestBibliotheque {
                 case 1:
                     System.out.println("===========Emprunter un document===========");
                     System.out.println("-----------Choisir l'emprunteur------------");
-                    MembreBibliotheque user = selectMembreBibliotheque(listeMembres, scanner);
+                    int userIndex = selectMembreBibliothequeIndex(listeMembres, scanner);
                     System.out.println("-----------Choisir le document-------------");
-                    DocBibliotheque doc = selectDocBibliotheque(catalogue, scanner);
-                    if (doc.emprunter(user)) {
+                    int docIndex = selectDocBibliothequeIndex(catalogue, scanner);
+                    MembreBibliotheque user = listeMembres.accesMembre(userIndex);
+                    if (catalogue.emprunteDoc(docIndex, user)) {
                         succes("Emprunt reussi");
                     } else {
                         fail("Emprunt echoue");
@@ -73,8 +74,8 @@ public class TestBibliotheque {
                 case 2:
                     System.out.println("===========Rendre un document==============");
                     System.out.println("-----------Choisir le document-------------");
-                    DocBibliotheque docRendu = selectDocBibliotheque(catalogue, scanner);
-                    if (docRendu.retourner()) {
+                    int docRenduIndex = selectDocBibliothequeIndex(catalogue, scanner);
+                    if (catalogue.rendreDoc(docRenduIndex)) {
                         succes("Retour reussi");
                     } else {
                         fail("Retour echoue");
@@ -83,10 +84,11 @@ public class TestBibliotheque {
                 case 3:
                     System.out.println("===========Reserver un document============");
                     System.out.println("-----------Choisir le reservant------------");
-                    MembreBibliotheque userReservant = selectMembreBibliotheque(listeMembres, scanner);
+                    int userReservantIndex = selectMembreBibliothequeIndex(listeMembres, scanner);
+                    MembreBibliotheque userReservant = listeMembres.accesMembre(userReservantIndex);
                     System.out.println("-----------Choisir le document-------------");
-                    DocBibliotheque docReserve = selectDocBibliotheque(catalogue, scanner);
-                    if (docReserve.reserver(userReservant)) {
+                    int docReserveIndex = selectDocBibliothequeIndex(catalogue, scanner);
+                    if (catalogue.reserveDoc(docReserveIndex, userReservant)) {
                         succes("Reservation reussi");
                     } else {
                         fail("Reservation echoue");
@@ -94,12 +96,14 @@ public class TestBibliotheque {
                     break;
                 case 4:
                     System.out.println("===========Afficher un document============");
-                    DocBibliotheque docAffiche = selectDocBibliotheque(catalogue, scanner);
+                    int docAfficheIndex = selectDocBibliothequeIndex(catalogue, scanner);
+                    DocBibliotheque docAffiche = catalogue.accesDoc(docAfficheIndex);
                     System.out.println(docAffiche);
                     break;
                 case 5:
                     System.out.println("===========Afficher un membre==============");
-                    MembreBibliotheque userAffiche = selectMembreBibliotheque(listeMembres, scanner);
+                    int userAfficheIndex = selectMembreBibliothequeIndex(listeMembres, scanner);
+                    MembreBibliotheque userAffiche = listeMembres.accesMembre(userAfficheIndex);
                     System.out.println(userAffiche);
                     break;
                 case 0:
@@ -109,22 +113,31 @@ public class TestBibliotheque {
                     System.out.println("Invalid choice");
                     break;
             }
-            
-
-
-
-
-
-
-
         }
-
-
-
         scanner.close();
     }
-    public static MembreBibliotheque selectMembreBibliotheque(ListeMembres users, Scanner scanner) {
-        MembreBibliotheque selectedUser = null;
+    
+
+    public static int selectDocBibliothequeIndex(CatalogueBibliotheque docs, Scanner scanner) {
+        int selectedDocIndex = -1;
+        int size = docs.getNombreDocs();
+        
+        // Display all docs
+        DocBibliotheque currentDoc = null;
+        for (int i = 0; i < size; i++) {
+            currentDoc = docs.accesDoc(i);
+            System.out.println(i + ". " + ANSI_CYAN + "Doc : " + currentDoc.getTitre() + " : " + currentDoc.getAuteur()
+                    + " : " + currentDoc.getAnnee() + ANSI_RESET);
+        }
+        // Select a doc
+        do {
+            System.out.println("Select a choice (0~%d): ".formatted(size - 1)); 
+            selectedDocIndex = scanner.nextInt();
+        } while (selectedDocIndex < 0 || selectedDocIndex >= size);
+        return selectedDocIndex;
+    }
+
+    public static int selectMembreBibliothequeIndex(ListeMembres users, Scanner scanner) {
         int selectedUserIndex = -1;
         int size = users.getNombreMembres();
         // Display all users
@@ -142,30 +155,9 @@ public class TestBibliotheque {
             selectedUserIndex = scanner.nextInt();
         } while (selectedUserIndex < 0 || selectedUserIndex >= size);
         
-        selectedUser = users.accesMembre(selectedUserIndex);
-        return selectedUser;
+        return selectedUserIndex;
     }
-        
-    public static DocBibliotheque selectDocBibliotheque(CatalogueBibliotheque docs, Scanner scanner) {
-        DocBibliotheque selectedDoc = null;
-        int selectedDocIndex = -1;
-        int size = docs.getNombreDocs();
-        
-        // Display all docs
-        DocBibliotheque currentDoc = null;
-        for (int i = 0; i < size; i++) {
-            currentDoc = docs.accesDoc(i);
-            System.out.println(i + ". " + ANSI_CYAN + "Doc : " + currentDoc.getTitre() + " : " + currentDoc.getAuteur()
-                    + " : " + currentDoc.getAnnee() + ANSI_RESET);
-        }
-        // Select a doc
-        do {
-            System.out.println("Select a choice (0~%d): ".formatted(size - 1)); 
-            selectedDocIndex = scanner.nextInt();
-        } while (selectedDocIndex < 0 || selectedDocIndex >= size);
-        selectedDoc = docs.accesDoc(selectedDocIndex);
-        return selectedDoc;
-    }
+
     public static void succes(String message) {
         System.out.println(ANSI_GREEN + message + ANSI_RESET);
     }
