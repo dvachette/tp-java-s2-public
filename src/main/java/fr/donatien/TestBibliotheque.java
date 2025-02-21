@@ -44,6 +44,9 @@ public class TestBibliotheque {
         test("Code Archivage de doc1 mis à jour", doc1.getCodeArchivage(), "123. 456 K78PM");
         test("Titre de doc1 mis à jour", doc1.getTitre(), "Java pour les nuls");
         test("Année de doc1 mis à jour", doc1.getAnnee(), 2010);
+        
+        System.out.println("\nDoc1 :");
+        System.out.println(doc1);
 
         System.out.println("\nTest des méthodes : ");
 
@@ -67,7 +70,7 @@ public class TestBibliotheque {
         test("Doc1 est réservé par user1", doc1.getMembreReservant(), user1);
         doc1.retourner();
         test("Doc1 est dans la pile de réservation", doc1.getEmplacement(), "Reserve");
-        test("Annulation de la réservation de doc1", doc1.annulerReservation(), true);
+        test("Annulation de la réservation de doc1", doc1.annulerReservation(user1), true);
         test("Doc1 n'est plus réservé", doc1.estReserve(), false);
         test("Doc1 est rangé", doc1.getEmplacement(), "Etagere");
 

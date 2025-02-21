@@ -80,9 +80,9 @@ public class DocBibliotheque {
         return result;
     }
 
-    public boolean annulerReservation() {
+    public boolean annulerReservation(MembreBibliotheque membreAnnulant) {
         boolean result = false;
-        if (!Objects.equals(this.membreReservant, null)) {
+        if (!Objects.equals(this.membreReservant, null) && membreReservant.equals(membreAnnulant)) {
             this.membreReservant = null;
             if (this.getEmplacement().equals("Reserve")) {
                 this.emplacement = "Etagere";
@@ -185,12 +185,15 @@ public class DocBibliotheque {
 
     public String toString() {
         return String.format(
-                "%s {\n\tCode d'archivage : %s\n\tTitre : %s\n\tAuteur : %s\n\tAnnée : %d\n}",
+                "%s {\n\tCode d'archivage : %s\n\tTitre : %s\n\tAuteur : %s\n\tAnnée : %d\n\tEmplacement : %s\n\tMembre emprunteur : %s\n\tMembre reservant : %s\n}",
                 this.getClass().getName(),
                 this.codeArchivage,
                 this.titre,
                 this.auteur,
-                this.annee);
+                this.annee,
+                this.emplacement,
+                this.membreEmprunteur,
+                this.membreReservant);
     }
 
     public MembreBibliotheque getMembreEmprunteur() {
