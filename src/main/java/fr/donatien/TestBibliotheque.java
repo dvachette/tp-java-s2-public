@@ -91,9 +91,9 @@ public class TestBibliotheque {
         System.out.println("\n" + testPassed + " tests réussis sur " + testCount);
     }
 
-    public static void test(String intitule, Object expression, Object expected) {
+    public static void test(String intitule, MembreBibliotheque membreObtenu, MembreBibliotheque membreAttendu) {
         testCount++;
-        if (Objects.equals(expression, expected)) {
+        if (Objects.equals(membreAttendu, membreObtenu)) {
             System.out.print(ANSI_GREEN);
             testPassed++;
         } else {
@@ -101,8 +101,68 @@ public class TestBibliotheque {
         }
         System.out.println("\nTest : ");
         System.out.println(intitule);
-        System.out.println("Attendu : " + expected);
-        System.out.println("Obtenu : " + expression);
+        System.out.println("Attendu :\n" + membreAttendu);
+        System.out.println("Obtenu :\n" + membreObtenu);
+        System.out.print(ANSI_RESET);
+    }
+
+    public static void test(String intitule, String stringObtenu, String stringAttendu) {
+        testCount++;
+        if (stringAttendu.equals(stringObtenu)) {
+            System.out.print(ANSI_GREEN);
+            testPassed++;
+        } else {
+            System.out.print(ANSI_RED);
+        }
+        System.out.println("\nTest : ");
+        System.out.println(intitule);
+        System.out.println("Attendu : " + stringAttendu);
+        System.out.println("Obtenu : " + stringObtenu);
+        System.out.print(ANSI_RESET);
+    }
+
+    public static void test(String intitule, int intObtenu, int intAttendu) {
+        testCount++;
+        if (intAttendu == intObtenu) {
+            System.out.print(ANSI_GREEN);
+            testPassed++;
+        } else {
+            System.out.print(ANSI_RED);
+        }
+        System.out.println("\nTest : ");
+        System.out.println(intitule);
+        System.out.println("Attendu : " + intAttendu);
+        System.out.println("Obtenu : " + intObtenu);
+        System.out.print(ANSI_RESET);
+    }
+
+    public static void test(String intitule, boolean boolObtenu, boolean boolAttendu) {
+        testCount++;
+        if (boolAttendu == boolObtenu) {
+            System.out.print(ANSI_GREEN);
+            testPassed++;
+        } else {
+            System.out.print(ANSI_RED);
+        }
+        System.out.println("\nTest : ");
+        System.out.println(intitule);
+        System.out.println("Attendu : " + boolAttendu);
+        System.out.println("Obtenu : " + boolObtenu);
+        System.out.print(ANSI_RESET);
+    }
+
+    public static void test(String intitule, DocBibliotheque docObtenu, DocBibliotheque docAttendu) {
+        testCount++;
+        if (Objects.equals(docAttendu, docObtenu)) {
+            System.out.print(ANSI_GREEN);
+            testPassed++;
+        } else {
+            System.out.print(ANSI_RED);
+        }
+        System.out.println("\nTest : ");
+        System.out.println(intitule);
+        System.out.println("Attendu :\n" + docAttendu);
+        System.out.println("Obtenu :\n" + docObtenu);
         System.out.print(ANSI_RESET);
     }
 }
