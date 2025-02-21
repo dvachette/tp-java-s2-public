@@ -134,32 +134,52 @@ public class DocBibliotheque {
         return codeArchivage;
     }
 
-    public void setCodeArchivage(String codeArchivage) {
-        this.codeArchivage = codeArchivage;
+    public boolean setCodeArchivage(String codeArchivage) {
+        boolean ans = false;
+        if (!(codeArchivage == null || codeArchivage.isEmpty())) {
+            this.codeArchivage = codeArchivage;
+            ans = true;
+        }
+        return ans;
     }
 
     public String getTitre() {
         return titre;
     }
 
-    public void setTitre(String titre) {
-        this.titre = titre;
+    public boolean setTitre(String titre) {
+        boolean ans = false;
+        if (!(titre == null || titre.isEmpty())) {
+            this.titre = titre;
+            ans = true;
+        }
+        return ans;
     }
 
     public String getAuteur() {
         return auteur;
     }
 
-    public void setAuteur(String auteur) {
-        this.auteur = auteur;
+    public boolean setAuteur(String auteur) {
+        boolean ans = false;
+        if (!(auteur == null || auteur.isEmpty())) {
+            this.auteur = auteur;
+            ans = true;
+        }
+        return ans;
     }
 
     public int getAnnee() {
         return annee;
     }
 
-    public void setAnnee(int annee) {
-        this.annee = annee;
+    public boolean setAnnee(int annee) {
+        boolean ans = false;
+        if (annee > 0) {
+            this.annee = annee;
+            ans = true;
+        }
+        return ans;
     }
 
     public String toString() {

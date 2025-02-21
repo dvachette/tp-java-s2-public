@@ -30,40 +30,52 @@ public class MembreBibliotheque {
         return nom;
     }
 
-    public void setNom(String nom) {
+    public boolean setNom(String nom) {
+        boolean ans = false;
         if (!(nom == null || nom.isEmpty())) {
             this.nom = nom;
+            ans = true;
         }
+        return ans;
     }
 
     public String getPrenom() {
         return prenom;
     }
 
-    public void setPrenom(String prenom) {
+    public boolean setPrenom(String prenom) {
+        boolean ans = false;
         if (!(prenom == null || prenom.isEmpty())) {
             this.prenom = prenom;
+            ans = true;
         }
+        return ans;
     }
 
     public String getNumeroTelephone() {
         return numeroTelephone;
     }
 
-    public void setNumeroTelephone(String numeroTelephone) {
+    public boolean setNumeroTelephone(String numeroTelephone) {
+        boolean ans = false;
         if (!(numeroTelephone == null || numeroTelephone.isEmpty())) {
             this.numeroTelephone = numeroTelephone;
+            ans = true;
         }
+        return ans;
     }
 
     public String getAdresse() {
         return adresse;
     }
 
-    public void setAdresse(String adresse) {
+    public boolean setAdresse(String adresse) {
+        boolean ans = false;
         if (!(adresse == null || adresse.isEmpty())) {
             this.adresse = adresse;
+            ans = true;
         }
+        return ans;
     }
 
     public int getNumeroAbonne() {
