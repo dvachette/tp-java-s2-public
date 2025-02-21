@@ -176,7 +176,7 @@ public class DocBibliotheque {
 
     public boolean setAnnee(int annee) {
         boolean ans = false;
-        if (annee <= Year.now().getValue()) {
+        if (annee <= Year.now().getValue() && annee != 0) {
             this.annee = annee;
             ans = true;
         }
