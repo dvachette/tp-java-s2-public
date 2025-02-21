@@ -70,6 +70,8 @@ public class TestBibliotheque {
         test("Doc1 est réservé par user1", doc1.getMembreReservant(), user1);
         doc1.retourner();
         test("Doc1 est dans la pile de réservation", doc1.getEmplacement(), "Reserve");
+        test("Réservation de doc1 (déjà réservé)", doc1.reserver(user2), false);
+        test("Annulation de la réservation de doc1 par user2 (pas autorisé)", doc1.annulerReservation(user2), false);
         test("Annulation de la réservation de doc1", doc1.annulerReservation(user1), true);
         test("Doc1 n'est plus réservé", doc1.estReserve(), false);
         test("Doc1 est rangé", doc1.getEmplacement(), "Etagere");
