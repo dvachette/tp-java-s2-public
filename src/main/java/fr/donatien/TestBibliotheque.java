@@ -32,9 +32,14 @@ public class TestBibliotheque {
         test("Getter de membre reservant de doc2", doc2.getMembreReservant(), null);
         System.out.println("\nTest des setters : ");
 
-        doc1.setCodeArchivage("123. 456 K78PM");
-        doc1.setTitre("Java pour les nuls");
-        doc1.setAnnee(2010);
+        test("Setter doc1 setCodeArchivage valeur interdite",doc1.setCodeArchivage(""), false);
+        test("Setter doc1 setTitre valeur interdite",doc1.setTitre(""), false);
+        test("Setter doc1 setAnnee valeur interdite",doc1.setAnnee(2030), false);
+
+
+        test("Setter doc1 setCodeArchivage valeur autorisée",doc1.setCodeArchivage("123. 456 K78PM"), true);
+        test("Setter doc1 setTitre valeur autorisée",doc1.setTitre("Java pour les nuls"), true);
+        test("Setter doc1 setAnnee valeur autorisée",doc1.setAnnee(2010), true);
 
         test("Code Archivage de doc1 mis à jour", doc1.getCodeArchivage(), "123. 456 K78PM");
         test("Titre de doc1 mis à jour", doc1.getTitre(), "Java pour les nuls");

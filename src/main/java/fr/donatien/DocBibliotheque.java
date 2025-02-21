@@ -1,5 +1,6 @@
 package fr.donatien;
 
+import java.time.Year;
 import java.util.Objects;
 
 public class DocBibliotheque {
@@ -175,7 +176,7 @@ public class DocBibliotheque {
 
     public boolean setAnnee(int annee) {
         boolean ans = false;
-        if (annee > 0) {
+        if (annee <= Year.now().getValue()) {
             this.annee = annee;
             ans = true;
         }
