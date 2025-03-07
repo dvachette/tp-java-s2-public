@@ -78,11 +78,11 @@ public class CatalogueBibliotheque {
         return result;
     }
 
-    public boolean annulResaDoc(int indiceDoc/*, MembreBibliotheque m*/) {
+    public boolean annulResaDoc(int indiceDoc, MembreBibliotheque m) {
         boolean result = false;
         DocBibliotheque doc = this.accesDoc(indiceDoc);
-        if (!Objects.equals(doc, null)/* && !Objects.equals(m, null)*/) {
-            result = doc.annulerReservation();
+        if (!Objects.equals(doc, null) && !Objects.equals(m, null)) {
+            result = doc.annulerReservation(m);
         }
         return result;
     }
