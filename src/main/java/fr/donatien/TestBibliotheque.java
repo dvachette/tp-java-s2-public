@@ -13,9 +13,6 @@ public class TestBibliotheque {
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
 
-    public static int testCount = 0;
-    public static int testPassed = 0;
-
     public static void main(String[] args) {
         DocBibliotheque doc1 = new DocBibliotheque("004. 178 K20PM", "Je suis parfait mais je gère", "D. Vachette",
                 2015);
