@@ -122,7 +122,7 @@ public class TestBibliotheque {
         // Display all users
         for (int i = 0; i < users.size(); i++) {
             System.out.println(i + ". " + ANSI_CYAN + "User : " + users.get(i).getNom() + " " + users.get(i).getPrenom()
-                    + " " + users.get(i).getNumeroAbonne() + ANSI_RESET);
+                    + " : " + users.get(i).getNumeroAbonne() + ANSI_RESET);
         }
         
         // Select a user
@@ -142,8 +142,8 @@ public class TestBibliotheque {
         
         // Display all docs
         for (int i = 0; i < docs.size(); i++) {
-            System.out.println(i + ". " + ANSI_CYAN + "Doc : " + docs.get(i).getTitre() + " " + docs.get(i).getAuteur()
-                    + " " + docs.get(i).getAnnee() + ANSI_RESET);
+            System.out.println(i + ". " + ANSI_CYAN + "Doc : " + docs.get(i).getTitre() + " : " + docs.get(i).getAuteur()
+                    + " : " + docs.get(i).getAnnee() + ANSI_RESET);
         }
         // Select a doc
         do {
