@@ -38,7 +38,8 @@ public class TestBibliotheque {
         Scanner scanner = new Scanner(System.in);
 
         int choice = -1;
-
+        DocBibliotheque doc = null;
+        MembreBibliotheque membre = null;
         while (choice != 0) {
             System.out.println("\n==========Menu Bibliotheque==========");
             System.out.println("1. Emprunter un document");
@@ -46,18 +47,19 @@ public class TestBibliotheque {
             System.out.println("3. Reserver un document");
             System.out.println("4. Afficher un documents");
             System.out.println("5. Afficher un membres");
+            System.out.println("6. Annuler une réservation");
             System.out.println("0. Quitter");
-            System.out.print("Select a choice (0~5): ");
+            System.out.print("Select a choice (0~6): ");
             choice = scanner.nextInt();
-
+            
             switch (choice) {
                 case 1:
                     System.out.println("===========Emprunter un document===========");
                     System.out.println("-----------Choisir l'emprunteur------------");
-                    MembreBibliotheque user = selectMembreBibliotheque(users, scanner);
+                    membre = selectMembreBibliotheque(users, scanner);
                     System.out.println("-----------Choisir le document-------------");
-                    DocBibliotheque doc = selectDocBibliotheque(docs, scanner);
-                    if (doc.emprunter(user)) {
+                    doc = selectDocBibliotheque(docs, scanner);
+                    if (doc.emprunter(membre)) {
                         succes("Emprunt reussi");
                     } else {
                         fail("Emprunt echoue");
@@ -66,8 +68,8 @@ public class TestBibliotheque {
                 case 2:
                     System.out.println("===========Rendre un document==============");
                     System.out.println("-----------Choisir le document-------------");
-                    DocBibliotheque docRendu = selectDocBibliotheque(docs, scanner);
-                    if (docRendu.retourner()) {
+                    doc = selectDocBibliotheque(docs, scanner);
+                    if (doc.retourner()) {
                         succes("Retour reussi");
                     } else {
                         fail("Retour echoue");
@@ -76,10 +78,10 @@ public class TestBibliotheque {
                 case 3:
                     System.out.println("===========Reserver un document============");
                     System.out.println("-----------Choisir le reservant------------");
-                    MembreBibliotheque userReservant = selectMembreBibliotheque(users, scanner);
+                    membre = selectMembreBibliotheque(users, scanner);
                     System.out.println("-----------Choisir le document-------------");
-                    DocBibliotheque docReserve = selectDocBibliotheque(docs, scanner);
-                    if (docReserve.reserver(userReservant)) {
+                    doc = selectDocBibliotheque(docs, scanner);
+                    if (doc.reserver(membre)) {
                         succes("Reservation reussi");
                     } else {
                         fail("Reservation echoue");
@@ -87,14 +89,23 @@ public class TestBibliotheque {
                     break;
                 case 4:
                     System.out.println("===========Afficher un document============");
-                    DocBibliotheque docAffiche = selectDocBibliotheque(docs, scanner);
-                    System.out.println(docAffiche);
+                    doc = selectDocBibliotheque(docs, scanner);
+                    System.out.println(doc);
                     break;
                 case 5:
                     System.out.println("===========Afficher un membre==============");
-                    MembreBibliotheque userAffiche = selectMembreBibliotheque(users, scanner);
-                    System.out.println(userAffiche);
+                    membre = selectMembreBibliotheque(users, scanner);
+                    System.out.println(membre);
                     break;
+                case 6:
+                    System.out.println("===========Annuler une réservation=========");
+                    doc = selectDocBibliotheque(docs, scanner);
+                    membre = selectMembreBibliotheque(users, scanner);
+                    if (doc.annulerReservation(membre)) {
+                        succes("Annulation réussie");
+                    } else {
+                        fail("Annulation échouée");
+                    }
                 case 0:
                     System.out.println("Bye");
                     break;
