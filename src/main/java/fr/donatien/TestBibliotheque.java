@@ -102,18 +102,7 @@ public class TestBibliotheque {
                     System.out.println("Invalid choice");
                     break;
             }
-            
-
-
-
-
-
-
-
         }
-
-
-
         scanner.close();
     }
     public static MembreBibliotheque selectMembreBibliotheque(ArrayList<MembreBibliotheque> users, Scanner scanner) {
@@ -153,11 +142,13 @@ public class TestBibliotheque {
         selectedDoc = docs.get(selectedDocIndex);
         return selectedDoc;
     }
+    
     public static void succes(String message) {
         System.out.println(ANSI_GREEN + message + ANSI_RESET);
     }
 
     public static void fail(String message) {
         System.out.println(ANSI_RED + message + ANSI_RESET);
+
     }
 }
