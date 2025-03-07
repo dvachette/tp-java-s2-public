@@ -36,10 +36,15 @@ public class TestBibliotheque {
         users.add(user2);
 
         Scanner scanner = new Scanner(System.in);
-
+        
         int choice = -1;
         DocBibliotheque doc = null;
         MembreBibliotheque membre = null;
+
+        System.out.println("Gestion de la Bibliotheque");
+        System.out.println("Programme créé par Donatien VACHETTE");
+        System.out.println("\nCe programme permet de gerer les emprunts et réservations des documents de la bibliothèque");
+        System.out.println("TP Java - IUT Info Lyon 1 - M. Belkhatir - 2025");
         while (choice != 0) {
             System.out.println("\n==========Menu Bibliotheque==========");
             System.out.println("1. Agir sur un document");
