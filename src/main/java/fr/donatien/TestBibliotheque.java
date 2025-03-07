@@ -42,17 +42,57 @@ public class TestBibliotheque {
         MembreBibliotheque membre = null;
         while (choice != 0) {
             System.out.println("\n==========Menu Bibliotheque==========");
+            System.out.println("1. Agir sur un document");
+            System.out.println("2. Afficher un document");
+            System.out.println("3. Afficher un membres");
+            System.out.println("4. Afficher les informations de la bibliotheque");
+            System.out.println("0. Quitter");
+            System.out.print("Select a choice (0~5): ");
+            choice = scanner.nextInt();
+            
+            switch (choice) {
+                case 1:
+                    actOnDoc(users, docs, scanner);
+                    break;
+                case 2:
+                    System.out.println("===========Afficher un document============");
+                    doc = selectDocBibliotheque(docs, scanner);
+                    System.out.println(doc);
+                    break;
+                case 3:
+                    System.out.println("===========Afficher un membre==============");
+                    membre = selectMembreBibliotheque(users, scanner);
+                    System.out.println(membre);
+                    break;
+                case 4:
+                    System.out.println("==========Informations sur la bibliotheque=======");
+                    System.out.printf("Nombre de documents empruntés :%s %3d %s\n",ANSI_PURPLE, DocBibliotheque.getNombreDocEmpruntes(), ANSI_RESET);
+                    System.out.printf("Nombre de documents réservés  :%s %3d %s\n",ANSI_PURPLE, DocBibliotheque.getNombreDocReserve(), ANSI_RESET);
+                    System.out.printf("Nombre de documents en retour :%s %3d %s\n",ANSI_PURPLE, DocBibliotheque.getNombreDocRetour(), ANSI_RESET);
+                    break;
+                case 0:
+                    System.out.println("Bye");
+                    break;
+                default:
+                    System.out.println("Invalid choice");
+                    break;
+            }
+        }
+        scanner.close();
+    }
+    public static void actOnDoc(ArrayList<MembreBibliotheque> users, ArrayList<DocBibliotheque> docs, Scanner scanner) {
+        int choice = -1;
+        MembreBibliotheque membre = null;
+        DocBibliotheque doc = null;
+        do {
+            System.out.println("==========Action document============");
             System.out.println("1. Emprunter un document");
             System.out.println("2. Rendre un document");
             System.out.println("3. Reserver un document");
-            System.out.println("4. Afficher un document");
-            System.out.println("5. Afficher un membres");
-            System.out.println("6. Annuler une réservation");
-            System.out.println("7. Afficher les informations de la bibliotheque");
-            System.out.println("0. Quitter");
-            System.out.print("Select a choice (0~7): ");
+            System.out.println("4. Annuler une réservation");
+            System.out.println("0. Revenir au menu principal");
+            System.out.print("Enter your choice (0~4) : ");
             choice = scanner.nextInt();
-            
             switch (choice) {
                 case 1:
                     System.out.println("===========Emprunter un document===========");
@@ -89,16 +129,6 @@ public class TestBibliotheque {
                     }
                     break;
                 case 4:
-                    System.out.println("===========Afficher un document============");
-                    doc = selectDocBibliotheque(docs, scanner);
-                    System.out.println(doc);
-                    break;
-                case 5:
-                    System.out.println("===========Afficher un membre==============");
-                    membre = selectMembreBibliotheque(users, scanner);
-                    System.out.println(membre);
-                    break;
-                case 6:
                     System.out.println("===========Annuler une réservation=========");
                     doc = selectDocBibliotheque(docs, scanner);
                     membre = selectMembreBibliotheque(users, scanner);
@@ -108,22 +138,13 @@ public class TestBibliotheque {
                         fail("Annulation échouée");
                     }
                     break;
-                case 7:
-                    System.out.println("==========Informations sur la bibliotheque=======");
-                    System.out.printf("Nombre de documents empruntés :%s %3d %s\n",ANSI_PURPLE, DocBibliotheque.getNombreDocEmpruntes(), ANSI_RESET);
-                    System.out.printf("Nombre de documents réservés  :%s %3d %s\n",ANSI_PURPLE, DocBibliotheque.getNombreDocReserve(), ANSI_RESET);
-                    System.out.printf("Nombre de documents en retour :%s %3d %s\n",ANSI_PURPLE, DocBibliotheque.getNombreDocRetour(), ANSI_RESET);
-                    break;
-                case 0:
-                    System.out.println("Bye");
-                    break;
                 default:
-                    System.out.println("Invalid choice");
+                    System.out.println("Invalid choice, please try again");
                     break;
             }
-        }
-        scanner.close();
+        } while (choice != 0);
     }
+
     public static MembreBibliotheque selectMembreBibliotheque(ArrayList<MembreBibliotheque> users, Scanner scanner) {
         MembreBibliotheque selectedUser = null;
         int selectedUserIndex = -1;
