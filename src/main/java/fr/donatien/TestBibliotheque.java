@@ -1,6 +1,5 @@
 package fr.donatien;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TestBibliotheque {
@@ -38,12 +37,18 @@ public class TestBibliotheque {
 
 
         Scanner scanner = new Scanner(System.in);
-
+        
         int choice = -1;
         DocBibliotheque doc = null;
         MembreBibliotheque membre = null;
+
         int userIndex = -1;
         int docIndex = -1;
+        System.out.println("Gestion de la Bibliotheque");
+        System.out.println("Programme créé par Donatien VACHETTE");
+        System.out.println("\nCe programme permet de gerer les emprunts et réservations des documents de la bibliothèque");
+        System.out.println("TP Java - IUT Info Lyon 1 - M. Belkhatir - 2025");
+
         while (choice != 0) {
             System.out.println("\n==========Menu Bibliotheque==========");
             System.out.println("1. Agir sur un document");
