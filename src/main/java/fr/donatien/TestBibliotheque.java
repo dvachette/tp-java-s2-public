@@ -164,5 +164,6 @@ public class TestBibliotheque {
 
     public static void fail(String message) {
         System.out.println(ANSI_RED + message + ANSI_RESET);
+
     }
 }
