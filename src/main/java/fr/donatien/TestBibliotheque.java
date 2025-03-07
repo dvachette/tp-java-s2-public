@@ -1,5 +1,6 @@
 package fr.donatien;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TestBibliotheque {
@@ -45,79 +46,31 @@ public class TestBibliotheque {
         int docIndex = -1;
         while (choice != 0) {
             System.out.println("\n==========Menu Bibliotheque==========");
-            System.out.println("1. Emprunter un document");
-            System.out.println("2. Rendre un document");
-            System.out.println("3. Reserver un document");
-            System.out.println("4. Afficher un document");
-            System.out.println("5. Afficher un membres");
-            System.out.println("6. Annuler une réservation");
-            System.out.println("7. Afficher les informations de la bibliotheque");
+            System.out.println("1. Agir sur un document");
+            System.out.println("2. Afficher un document");
+            System.out.println("3. Afficher un membres");
+            System.out.println("4. Afficher les informations de la bibliotheque");
             System.out.println("0. Quitter");
-            System.out.print("Select a choice (0~7): ");
+            System.out.print("Select a choice (0~4): ");
             choice = scanner.nextInt();
             
             switch (choice) {
                 case 1:
-                    System.out.println("===========Emprunter un document===========");
-                    System.out.println("-----------Choisir l'emprunteur------------");
-                    userIndex = selectMembreBibliothequeIndex(listeMembres, scanner);
-                    System.out.println("-----------Choisir le document-------------");
-                    docIndex = selectDocBibliothequeIndex(catalogue, scanner);
-                    membre = listeMembres.accesMembre(userIndex);
-                    if (catalogue.emprunteDoc(docIndex, membre)) {
-                        succes("Emprunt reussi");
-                    } else {
-                        fail("Emprunt echoue");
-                    }
+                    actOnDoc(listeMembres, catalogue, scanner);
                     break;
                 case 2:
-                    System.out.println("===========Rendre un document==============");
-                    System.out.println("-----------Choisir le document-------------");
-                    docIndex = selectDocBibliothequeIndex(catalogue, scanner);
-                    if (catalogue.rendreDoc(docIndex)) {
-                        succes("Retour reussi");
-                    } else {
-                        fail("Retour echoue");
-                    }
-                    break;
-                case 3:
-                    System.out.println("===========Reserver un document============");
-                    System.out.println("-----------Choisir le reservant------------");
-                    userIndex = selectMembreBibliothequeIndex(listeMembres, scanner);
-                    membre = listeMembres.accesMembre(userIndex);
-                    System.out.println("-----------Choisir le document-------------");
-                    docIndex = selectDocBibliothequeIndex(catalogue, scanner);
-                    if (catalogue.reserveDoc(docIndex, membre)) {
-                        succes("Reservation reussi");
-                    } else {
-                        fail("Reservation echoue");
-                    }
-                    break;
-                case 4:
                     System.out.println("===========Afficher un document============");
                     docIndex = selectDocBibliothequeIndex(catalogue, scanner);
                     doc = catalogue.accesDoc(docIndex);
                     System.out.println(doc);
                     break;
-                case 5:
+                case 3:
                     System.out.println("===========Afficher un membre==============");
                     userIndex = selectMembreBibliothequeIndex(listeMembres, scanner);
                     membre = listeMembres.accesMembre(userIndex);
                     System.out.println(membre);
                     break;
-                case 6:
-                    System.out.println("===========Annuler une réservation=========");
-                    docIndex = selectDocBibliothequeIndex(catalogue, scanner);
-                    userIndex = selectMembreBibliothequeIndex(listeMembres, scanner);
-                    doc = catalogue.accesDoc(docIndex);
-                    membre = listeMembres.accesMembre(userIndex);
-                    if (doc.annulerReservation(membre)) {
-                        succes("Annulation réussie");
-                    } else {
-                        fail("Annulation échouée");
-                    }
-                    break;
-                case 7:
+                case 4:
                     System.out.println("==========Informations sur la bibliotheque=======");
                     System.out.printf("Nombre de documents empruntés :%s %3d %s\n",ANSI_PURPLE, DocBibliotheque.getNombreDocEmpruntes(), ANSI_RESET);
                     System.out.printf("Nombre de documents réservés  :%s %3d %s\n",ANSI_PURPLE, DocBibliotheque.getNombreDocReserve(), ANSI_RESET);
@@ -133,7 +86,81 @@ public class TestBibliotheque {
         }
         scanner.close();
     }
-    
+    public static void actOnDoc(ListeMembres users, CatalogueBibliotheque docs, Scanner scanner) {
+        int choice = -1;
+        MembreBibliotheque membre = null;
+        DocBibliotheque doc = null;
+        int membreIndex = -1;
+        int docIndex = -1;
+        do {
+            System.out.println("==========Action document============");
+            System.out.println("1. Emprunter un document");
+            System.out.println("2. Rendre un document");
+            System.out.println("3. Reserver un document");
+            System.out.println("4. Annuler une réservation");
+            System.out.println("0. Revenir au menu principal");
+            System.out.print("Enter your choice (0~4) : ");
+            choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    System.out.println("===========Emprunter un document===========");
+                    System.out.println("-----------Choisir l'emprunteur------------");
+                    membreIndex = selectMembreBibliothequeIndex(users, scanner);
+                    membre = users.accesMembre(membreIndex);
+                    System.out.println("-----------Choisir le document-------------");
+                    docIndex = selectDocBibliothequeIndex(docs, scanner);
+                    doc = docs.accesDoc(docIndex);
+                    if (doc.emprunter(membre)) {
+                        succes("Emprunt reussi");
+                    } else {
+                        fail("Emprunt echoue");
+                    }
+                    break;
+                case 2:
+                    System.out.println("===========Rendre un document==============");
+                    System.out.println("-----------Choisir le document-------------");
+                    docIndex = selectDocBibliothequeIndex(docs, scanner);
+                    doc = docs.accesDoc(docIndex);
+                    if (doc.retourner()) {
+                        succes("Retour reussi");
+                    } else {
+                        fail("Retour echoue");
+                    }
+                    break;
+                case 3:
+                    System.out.println("===========Reserver un document============");
+                    System.out.println("-----------Choisir le reservant------------");
+                    membreIndex = selectMembreBibliothequeIndex(users, scanner);
+                    membre = users.accesMembre(membreIndex);
+                    System.out.println("-----------Choisir le document-------------");
+                    docIndex = selectDocBibliothequeIndex(docs, scanner);
+                    doc = docs.accesDoc(docIndex);
+                    if (doc.reserver(membre)) {
+                        succes("Reservation reussi");
+                    } else {
+                        fail("Reservation echoue");
+                    }
+                    break;
+                case 4:
+                    System.out.println("===========Annuler une réservation=========");
+                    System.out.println("-----------Choisir le reservant------------");
+                    membreIndex = selectMembreBibliothequeIndex(users, scanner);
+                    membre = users.accesMembre(membreIndex);
+                    System.out.println("-----------Choisir le document-------------");
+                    docIndex = selectDocBibliothequeIndex(docs, scanner);
+                    doc = docs.accesDoc(docIndex);
+                    if (doc.annulerReservation(membre)) {
+                        succes("Annulation réussie");
+                    } else {
+                        fail("Annulation échouée");
+                    }
+                    break;
+                default:
+                    System.out.println("Invalid choice, please try again");
+                    break;
+            }
+        } while (choice != 0);
+    }
 
     public static int selectDocBibliothequeIndex(CatalogueBibliotheque docs, Scanner scanner) {
         int selectedDocIndex = -1;
