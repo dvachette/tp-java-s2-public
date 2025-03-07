@@ -48,11 +48,12 @@ public class TestBibliotheque {
             System.out.println("1. Emprunter un document");
             System.out.println("2. Rendre un document");
             System.out.println("3. Reserver un document");
-            System.out.println("4. Afficher un documents");
+            System.out.println("4. Afficher un document");
             System.out.println("5. Afficher un membres");
             System.out.println("6. Annuler une réservation");
+            System.out.println("7. Afficher les informations de la bibliotheque");
             System.out.println("0. Quitter");
-            System.out.print("Select a choice (0~6): ");
+            System.out.print("Select a choice (0~7): ");
             choice = scanner.nextInt();
             
             switch (choice) {
@@ -115,6 +116,13 @@ public class TestBibliotheque {
                     } else {
                         fail("Annulation échouée");
                     }
+                    break;
+                case 7:
+                    System.out.println("==========Informations sur la bibliotheque=======");
+                    System.out.printf("Nombre de documents empruntés :%s %3d %s\n",ANSI_PURPLE, DocBibliotheque.getNombreDocEmpruntes(), ANSI_RESET);
+                    System.out.printf("Nombre de documents réservés  :%s %3d %s\n",ANSI_PURPLE, DocBibliotheque.getNombreDocReserve(), ANSI_RESET);
+                    System.out.printf("Nombre de documents en retour :%s %3d %s\n",ANSI_PURPLE, DocBibliotheque.getNombreDocRetour(), ANSI_RESET);
+                    break;
                 case 0:
                     System.out.println("Bye");
                     break;
