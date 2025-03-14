@@ -11,8 +11,7 @@ public class CatalogueBibliotheque {
     public boolean ajDoc(DocBibliotheque docAj) {
         boolean result = false;
         if (docAj != null && !this.docs.contains(docAj)) {
-            this.docs.add(docAj);
-            result = true;
+            result = this.docs.add(docAj);
         }
         return result;
     }
@@ -20,8 +19,7 @@ public class CatalogueBibliotheque {
     public boolean supDoc(DocBibliotheque docSup) {
         boolean result = false;
         if (docSup != null && this.docs.contains(docSup)) {
-            this.docs.remove(docSup);
-            result = true;
+            result = this.docs.remove(docSup);
         }
         return result;
     }
@@ -35,6 +33,7 @@ public class CatalogueBibliotheque {
     }
 
     public void afficheTousLesDocs() {
+
         for (int i = 0; i < this.docs.size(); i++) {
             System.out.println(docs.get(i));
         }
@@ -63,7 +62,7 @@ public class CatalogueBibliotheque {
     public boolean emprunteDoc(int indiceDoc, MembreBibliotheque m) {
         boolean result = false;
         DocBibliotheque doc = this.accesDoc(indiceDoc);
-        if (!Objects.equals(doc, null) && !Objects.equals(m, null)) {
+        if (!Objects.equals(doc, null) && !Objects.equals(m, null)) {//TODO verifier emprunteur dans emprunt
             result = doc.emprunter(m);
         }
         return result;

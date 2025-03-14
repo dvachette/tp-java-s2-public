@@ -1,6 +1,7 @@
 package fr.donatien;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ListeMembres {
     private ArrayList<MembreBibliotheque> membres;
@@ -15,9 +16,13 @@ public class ListeMembres {
         }
         return result;
     }
-    public MembreBibliotheque accesMembre(int i) {
-        if (i >= 0 && i < this.membres.size()) {
-            return this.membres.get(i);
+    public MembreBibliotheque accesMembre(int num) {
+        MembreBibliotheque ans = null;
+        int i = 0;
+        while (Objects.equals(ans, null) || i < this.getNombreMembres()) {
+            if (this.membres.get(i).getNumeroAbonne() == num) {
+                ans = this.membres.get(i);
+            }
         }
         return null;
     }

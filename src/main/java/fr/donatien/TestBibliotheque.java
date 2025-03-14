@@ -164,6 +164,82 @@ public class TestBibliotheque {
         } while (choice != 0);
     }
 
+    public static void displayInformations(CatalogueBibliotheque docs, ListeMembres users, Scanner scanner) {
+        int choice = -1;
+        MembreBibliotheque membre = null;
+        DocBibliotheque doc = null;
+        int membreIndex = -1;
+        int docIndex = -1;
+        do {
+            System.out.println("==========Afficher des informations============");
+            System.out.println("1. Emprunter un document");
+            System.out.println("2. Rendre un document");
+            System.out.println("3. Reserver un document");
+            System.out.println("4. Annuler une réservation");
+            System.out.println("0. Revenir au menu principal");
+            System.out.print("Enter your choice (0~4) : ");
+            choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    System.out.println("===========Emprunter un document===========");
+                    System.out.println("-----------Choisir l'emprunteur------------");
+                    membreIndex = selectMembreBibliothequeIndex(users, scanner);
+                    membre = users.accesMembre(membreIndex);
+                    System.out.println("-----------Choisir le document-------------");
+                    docIndex = selectDocBibliothequeIndex(docs, scanner);
+                    doc = docs.accesDoc(docIndex);
+                    if (doc.emprunter(membre)) {
+                        succes("Emprunt reussi");
+                    } else {
+                        fail("Emprunt echoue");
+                    }
+                    break;
+                case 2:
+                    System.out.println("===========Rendre un document==============");
+                    System.out.println("-----------Choisir le document-------------");
+                    docIndex = selectDocBibliothequeIndex(docs, scanner);
+                    doc = docs.accesDoc(docIndex);
+                    if (doc.retourner()) {
+                        succes("Retour reussi");
+                    } else {
+                        fail("Retour echoue");
+                    }
+                    break;
+                case 3:
+                    System.out.println("===========Reserver un document============");
+                    System.out.println("-----------Choisir le reservant------------");
+                    membreIndex = selectMembreBibliothequeIndex(users, scanner);
+                    membre = users.accesMembre(membreIndex);
+                    System.out.println("-----------Choisir le document-------------");
+                    docIndex = selectDocBibliothequeIndex(docs, scanner);
+                    doc = docs.accesDoc(docIndex);
+                    if (doc.reserver(membre)) {
+                        succes("Reservation reussi");
+                    } else {
+                        fail("Reservation echoue");
+                    }
+                    break;
+                case 4:
+                    System.out.println("===========Annuler une réservation=========");
+                    System.out.println("-----------Choisir le reservant------------");
+                    membreIndex = selectMembreBibliothequeIndex(users, scanner);
+                    membre = users.accesMembre(membreIndex);
+                    System.out.println("-----------Choisir le document-------------");
+                    docIndex = selectDocBibliothequeIndex(docs, scanner);
+                    doc = docs.accesDoc(docIndex);
+                    if (doc.annulerReservation(membre)) {
+                        succes("Annulation réussie");
+                    } else {
+                        fail("Annulation échouée");
+                    }
+                    break;
+                default:
+                    System.out.println("Invalid choice, please try again");
+                    break;
+            }
+        } while (choice != 0);
+    }
+
     public static int selectDocBibliothequeIndex(CatalogueBibliotheque docs, Scanner scanner) {
         int selectedDocIndex = -1;
         int size = docs.getNombreDocs();
