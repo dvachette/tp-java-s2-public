@@ -62,7 +62,7 @@ public class CatalogueBibliotheque {
     public boolean emprunteDoc(int indiceDoc, MembreBibliotheque m) {
         boolean result = false;
         DocBibliotheque doc = this.accesDoc(indiceDoc);
-        if (!Objects.equals(doc, null) && !Objects.equals(m, null)) {//TODO verifier emprunteur dans emprunt
+        if (!Objects.equals(doc, null)) {
             result = doc.emprunter(m);
         }
         return result;

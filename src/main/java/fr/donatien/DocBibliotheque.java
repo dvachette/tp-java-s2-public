@@ -46,21 +46,22 @@ public class DocBibliotheque {
 
     public boolean emprunter(MembreBibliotheque membreEmprunteur) {
         boolean result = false;
-        if (this.getEmplacement().equals("Etagere")) {
-            this.emplacement = "Emprunte";
-            result = true;
-            this.membreEmprunteur = membreEmprunteur;
-            nombreDocEmpruntes++;
-        } else if (this.getEmplacement().equals("Reserve") && Objects.equals(this.membreReservant, membreEmprunteur)) {
-            this.emplacement = "Emprunte";
-            this.membreEmprunteur = membreEmprunteur;
-            this.membreReservant = null;
-            result = true;
-            nombreDocEmpruntes++;
-            nombreDocReserve--;
+        if (!Objects.equals(membreEmprunteur, null)) {
+            if (this.getEmplacement().equals("Etagere")) {
+                this.emplacement = "Emprunte";
+                result = true;
+                this.membreEmprunteur = membreEmprunteur;
+                nombreDocEmpruntes++;
+            } else if (this.getEmplacement().equals("Reserve") && Objects.equals(this.membreReservant, membreEmprunteur)) {
+                this.emplacement = "Emprunte";
+                this.membreEmprunteur = membreEmprunteur;
+                this.membreReservant = null;
+                result = true;
+                nombreDocEmpruntes++;
+                nombreDocReserve--;
+            }
         }
         return result;
-
     }
 
     public boolean retourner() {
