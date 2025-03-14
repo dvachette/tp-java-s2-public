@@ -22,8 +22,8 @@ public class ListeMembres {
         return null;
     }
     public void afficheTousLesMembres() {
-        for (MembreBibliotheque membre : this.membres) {
-            System.out.println(membre);
+        for (int i = 0; i < membres.size(); i++) {
+            System.out.println(membres.get(i));
         }
     }
     public int getNombreMembres() {
@@ -40,8 +40,8 @@ public class ListeMembres {
 
     public String toString() {
         String ans = this.getClass().getName() + " {\n" ;
-        for (MembreBibliotheque membre : this.membres) {
-            ans += membre.toString() + "\n";
+        for (int i = 0; i < membres.size(); i++) {
+            ans += membres.get(i).toString() + "\n";
         }
         ans += "}";
         return ans;

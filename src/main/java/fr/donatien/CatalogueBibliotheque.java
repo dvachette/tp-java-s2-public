@@ -35,15 +35,15 @@ public class CatalogueBibliotheque {
     }
 
     public void afficheTousLesDocs() {
-        for (DocBibliotheque doc : this.docs) {
-            System.out.println(doc);
+        for (int i = 0; i < this.docs.size(); i++) {
+            System.out.println(docs.get(i));
         }
     }
 
     public void afficheDocsEmpruntes() {
-        for (DocBibliotheque doc : this.docs) {
-            if (doc.estEmprunte()) {
-                System.out.println(doc);
+        for (int i = 0; i < this.docs.size(); i++) {
+            if (docs.get(i).estEmprunte()) {
+                System.out.println(docs.get(i));
             }
         }
     }
@@ -53,8 +53,8 @@ public class CatalogueBibliotheque {
 
     public String toString() {
         String ans = this.getClass().getName() + " {\n" ;
-        for (DocBibliotheque doc : this.docs) {
-            ans += doc.toString() + "\n";
+        for (int i = 0; i < this.docs.size(); i++) {
+            ans += docs.get(i).toString() + "\n";
         }
         ans += "}";
         return ans;
