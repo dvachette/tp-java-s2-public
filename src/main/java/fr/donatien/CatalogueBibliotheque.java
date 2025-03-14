@@ -101,4 +101,17 @@ public class CatalogueBibliotheque {
         }
         return result;
     }
+
+    public void displayDocsBorrowedBy(MembreBibliotheque user) {
+        int cpt = 0;
+        for (int i = 0; i < this.docs.size(); i++) {
+            if (Objects.equals(docs.get(i).getMembreEmprunteur(), user)) {
+                System.out.println(docs.get(i));
+                cpt++;
+            }
+        }
+        if (cpt == 0) {
+            System.out.println("Aucun documents empruntés");
+        }
+    }
 }

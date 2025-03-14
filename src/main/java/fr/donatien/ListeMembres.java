@@ -51,4 +51,12 @@ public class ListeMembres {
         ans += "}";
         return ans;
     }
+
+    public MembreBibliotheque getAt(int i) {
+        MembreBibliotheque ans = null;
+        if (i >= 0 && i < this.getNombreMembres()) {
+            ans = this.membres.get(i);
+        }
+        return ans;
+    }
 }

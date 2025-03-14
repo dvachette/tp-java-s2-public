@@ -50,7 +50,7 @@ public class TestBibliotheque {
             System.out.println("\n==========Menu Bibliotheque==========");
             System.out.println("1. Agir sur un document");
             System.out.println("2. Afficher un document");
-            System.out.println("3. Afficher un membres");
+            System.out.println("3. Afficher un membre");
             System.out.println("4. Afficher les informations de la bibliotheque");
             System.out.println("0. Quitter");
             System.out.print("Select a choice (0~4): ");
@@ -69,8 +69,9 @@ public class TestBibliotheque {
                 case 3:
                     System.out.println("===========Afficher un membre==============");
                     userIndex = selectMembreBibliothequeIndex(listeMembres, scanner);
-                    membre = listeMembres.accesMembre(userIndex);
+                    membre = listeMembres.getAt(userIndex);
                     System.out.println(membre);
+                    catalogue.displayDocsBorrowedBy(membre);
                     break;
                 case 4:
                     System.out.println("==========Informations sur la bibliotheque=======");
@@ -106,7 +107,7 @@ public class TestBibliotheque {
                     System.out.println("===========Emprunter un document===========");
                     System.out.println("-----------Choisir l'emprunteur------------");
                     membreIndex = selectMembreBibliothequeIndex(users, scanner);
-                    membre = users.accesMembre(membreIndex);
+                    membre = users.getAt(membreIndex);
                     System.out.println("-----------Choisir le document-------------");
                     docIndex = selectDocBibliothequeIndex(docs, scanner);
                     doc = docs.accesDoc(docIndex);
@@ -131,7 +132,7 @@ public class TestBibliotheque {
                     System.out.println("===========Reserver un document============");
                     System.out.println("-----------Choisir le reservant------------");
                     membreIndex = selectMembreBibliothequeIndex(users, scanner);
-                    membre = users.accesMembre(membreIndex);
+                    membre = users.getAt(membreIndex);
                     System.out.println("-----------Choisir le document-------------");
                     docIndex = selectDocBibliothequeIndex(docs, scanner);
                     doc = docs.accesDoc(docIndex);
@@ -145,7 +146,7 @@ public class TestBibliotheque {
                     System.out.println("===========Annuler une réservation=========");
                     System.out.println("-----------Choisir le reservant------------");
                     membreIndex = selectMembreBibliothequeIndex(users, scanner);
-                    membre = users.accesMembre(membreIndex);
+                    membre = users.getAt(membreIndex);
                     System.out.println("-----------Choisir le document-------------");
                     docIndex = selectDocBibliothequeIndex(docs, scanner);
                     doc = docs.accesDoc(docIndex);
@@ -219,7 +220,7 @@ public class TestBibliotheque {
         // Display all users
         MembreBibliotheque currentUser = null;
         for (int i = 0; i < size; i++) {
-            currentUser = users.accesMembre(i);
+            currentUser = users.getAt(i);
             System.out.println(i + ". " + ANSI_CYAN + "User : " + currentUser.getNom() + " : " + currentUser.getPrenom()
                     + " : " + currentUser.getNumeroAbonne() + ANSI_RESET);
         }
@@ -230,7 +231,6 @@ public class TestBibliotheque {
             System.out.printf("Select a choice (0~%d): ", size - 1); 
             selectedUserIndex = scanner.nextInt();
         } while (selectedUserIndex < 0 || selectedUserIndex >= size);
-        
         return selectedUserIndex;
     }
 

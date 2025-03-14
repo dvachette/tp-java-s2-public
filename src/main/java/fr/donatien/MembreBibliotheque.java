@@ -85,7 +85,7 @@ public class MembreBibliotheque {
     public String toString() {
         return String.format(
                 "%s {\n\tNom : %s\n\tPrenom : %s\n\tAdresse : %s\n\tN° de téléphone : %s\n\tN° abonné : %d\n}",
-                this.getClass().getName(),
+                this.getClass().getSimpleName(),
                 this.nom,
                 this.prenom,
                 this.adresse,
