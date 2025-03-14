@@ -177,7 +177,7 @@ public class TestBibliotheque {
         }
         // Select a doc
         do {
-            System.out.println("Select a choice (0~%d): ".formatted(size - 1)); 
+            System.out.printf("Select a choice (0~%d): ",size - 1); 
             selectedDocIndex = scanner.nextInt();
         } while (selectedDocIndex < 0 || selectedDocIndex >= size);
         return selectedDocIndex;
@@ -197,7 +197,7 @@ public class TestBibliotheque {
         // Select a user
         
         do {
-            System.out.println("Select a choice (0~%d): ".formatted(size - 1)); 
+            System.out.printf("Select a choice (0~%d): ", size - 1); 
             selectedUserIndex = scanner.nextInt();
         } while (selectedUserIndex < 0 || selectedUserIndex >= size);
         
