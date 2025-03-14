@@ -33,17 +33,24 @@ public class CatalogueBibliotheque {
     }
 
     public void afficheTousLesDocs() {
-
+        if (this.docs.size() == 0) {
+            System.out.println("Aucun documents trouvés");
+        }
         for (int i = 0; i < this.docs.size(); i++) {
             System.out.println(docs.get(i));
         }
     }
 
     public void afficheDocsEmpruntes() {
+        int cpt = 0;
         for (int i = 0; i < this.docs.size(); i++) {
             if (docs.get(i).estEmprunte()) {
                 System.out.println(docs.get(i));
+                cpt++;
             }
+        }
+        if (cpt == 0) {
+            System.out.println("Aucun documents empruntés");
         }
     }
     public int getNombreDocs() {
